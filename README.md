@@ -79,4 +79,4 @@ erDiagram
   employee ||--o{ employee_events : "employee_id"
   notes }o--o{ employee_events : ""
 ```
-#jghj
+#ACKNOWLEDGEMENTS - Code adapted from Udacity Data Sceintist Nanodegree - Software Engineering for Data Scientists
