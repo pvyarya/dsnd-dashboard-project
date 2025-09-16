@@ -10,7 +10,7 @@ from .sql_execution import QueryMixin
 # Define a class called QueryBase
 # Use inheritance to add methods
 # for querying the employee_events database.
-class QueryBase:
+class QueryBase(QueryMixin):
     
     # Create a class attribute called `name`
     # set the attribute to an empty string
@@ -27,27 +27,17 @@ class QueryBase:
     # that receives an `id` argument
     # This method should return a pandas dataframe
     def event_counts(self, id):
-        
-        # QUERY 1
-        # Write an SQL query that groups by `event_date`
-        # and sums the number of positive and negative events
-        # Use f-string formatting to set the FROM {table}
-        # to the `name` class attribute
-        # Use f-string formatting to set the name
-        # of id columns used for joining
-        # order by the event_date column
-        query = f"""
+        sql_query = f"""
             SELECT event_date,
-                   SUM(positive_events) AS total_positive,
-                   SUM(negative_events) AS total_negative
-            FROM {self.name}
-            JOIN employee_events
-                ON {self.name}.{self.name}_id = employee_events.{self.name}_id
-            WHERE {self.name}.{self.name}_id = {id}
+            SUM(positive_events) AS positive_events,
+            SUM(negative_events) AS negative_events
+            FROM employee_events
+            JOIN {self.name} USING({self.name}_id)
+            WHERE {self.name}_id = {id}
             GROUP BY event_date
             ORDER BY event_date;
             """
-        return super().pandas_query(sql)
+        return self.pandas_query(sql_query)
         
 
     
@@ -66,10 +56,8 @@ class QueryBase:
         sql = f"""
         SELECT note_date, note
         FROM notes 
-        JOIN {self.name}
-            ON {self.name}.{self.name}_id = notes.{self.name}_id
-        WHERE {self.name}.{self.name}_id = {id}
+        WHERE {self.name}_id = {id}
         ORDER BY note_date;
         """
-        return super().pandas_query(sql)
+        return self.pandas_query(sql)
         

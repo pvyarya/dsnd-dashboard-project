@@ -79,4 +79,10 @@ erDiagram
   employee ||--o{ employee_events : "employee_id"
   notes }o--o{ employee_events : ""
 ```
+CODE INPUT IN TERMINAL:
+python -m venv new_env
+source new_env/bin/activate
+pip install -r requirements.txt
+python report/dashboard.py
+
 #ACKNOWLEDGEMENTS - Code adapted from Udacity Data Sceintist Nanodegree - Software Engineering for Data Scientists

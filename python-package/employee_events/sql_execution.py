@@ -11,19 +11,18 @@ db_path = Path(__file__).parent / "employee_events.db"
 # OPTION 1: MIXIN
 class QueryMixin:
     
-    def pandas_query(self, sql_query: str):
-        with connect(db_path) as conn:
-            cursor = conn.cursor()
-            cursor.execute(sql_query)
-            rows = cursor.fetchall()
-            columns = [desc[0] for desc in cursor.description]
-            return pd.DataFrame(rows, columns=columns)
+    def pandas_query(self, sql_query: str) -> pd.DataFrame:
+        connection = connect(db_path)
+        df = pd.read_sql_query(sql_query, connection)
+        connection.close()
+        return df
     
-    def query(self, sql_query: str):
-        with connect(db_path) as conn:
-            cursor = conn.cursor()
-            cursor.execute(sql_query)
-            return cursor.fetchall()
+    def query(self, sql_query: str) -> list:
+        connection = connect(db_path)
+        cursor = connection.cursor()
+        result = cursor.execute(sql_query).fetchall()
+        connection.close()
+        return result
 
  # Leave this code unchanged
 def query(func):
