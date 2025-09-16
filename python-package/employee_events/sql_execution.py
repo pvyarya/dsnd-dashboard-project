@@ -4,7 +4,8 @@ from functools import wraps
 import pandas as pd
 import os
 
-# Path to database
+# Using pathlib, create a `db_path` variable
+# that points to the absolute path for the `employee_events.db` file
 db_path = Path(__file__).parent / "employee_events.db"
 
 # OPTION 1: MIXIN

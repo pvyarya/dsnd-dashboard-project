@@ -28,6 +28,8 @@ from combined_components import FormGroup, CombinedComponent
 class ReportDropdown(Dropdown):
 
     # Overwrite the build_component method
+    # ensuring it has the same parameters
+    # as the Report parent class's method
     def build_component(self, entity_id, model):
         # Set the `label` attribute so it is set
         # to the `name` attribute for the model
@@ -36,6 +38,8 @@ class ReportDropdown(Dropdown):
         return super().build_component(entity_id, model)
 
     # Overwrite the `component_data` method
+    # Ensure the method uses the same parameters
+    # as the parent class method
     def component_data(self, entity_id, model):
         # Using the model argument
         # call the employee_events method
